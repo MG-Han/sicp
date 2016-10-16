@@ -1,27 +1,30 @@
-;compute square root in newton method
-(define (square x) (* x x))
+(define (square x)
+  (* x x))
 (define (abs x)
   (if (< x 0) (- x) x))
-(define (improve guess x)
-  (/ (+ guess (/ x guess)) 2))
-(define (good-enough? guess x)
-  (< (abs (- (improve guess x) guess)) 0.0001))
-(define (sqrt-iter guess x)
-  (if (good-enough? guess x)
-      guess
-      (sqrt-iter (improve guess x) x)))
-(define (sqrt x)
-  (sqrt-iter 1.0 x))
-  
-;compute cube root in newton method
-(define (improve-cube guess x)
-  (/ (+ (/ x (square guess)) (* 2 guess)) 3))
-(define (cube-iter guess x)
-  (if (good-enough-cube? guess x)
-      guess
-      (cube-iter (improve-cube guess x) x)))
-(define (good-enough-cube? guess x)
-  (< (abs (- (improve-cube guess x) guess)) 0.0001))
-(define (curt x)
-  (cube-iter 1.0 x))
+(define (average a b)
+  (/ (+ a b) 2))
 
+;compute square root in newton method					
+(define (sqrt x)
+  (define (improve guess)
+    (average guess (/ x guess)))
+  (define (good-enough? guess)
+    (< (abs (- (improve guess) guess)) 0.0001))
+  (define (sqrt-iter guess)
+    (if (good-enough? guess)
+	guess
+	(sqrt-iter (improve guess))))
+  (sqrt-iter 1.0))
+
+;compute cube root in newton method
+(define (curt x)
+  (define (improve guess)
+    (/ (+ (/ x (square guess)) (* 2 guess)) 3))
+  (define (good-enough? guess)
+    (< (abs (- (improve guess) guess)) 0.0001))
+  (define (curt-iter guess)
+    (if (good-enough? guess)
+	guess
+	(curt-iter (improve guess))))
+  (curt-iter 1.0))
