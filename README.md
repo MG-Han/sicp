@@ -1,6 +1,6 @@
 #Structure and Interpretation of Computer Programs 2/e
 
-personal practice of studying SICP
+- personal practice of studying SICP
 
 SICP official site
 https://mitpress.mit.edu/sicp/
